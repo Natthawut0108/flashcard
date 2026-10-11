@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Flashcards – ทบทวนให้จำแม่นด้วย Spaced Repetition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600&family=Mali:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Smart Flashcards</h1>
+  <nav>
+    <button data-tab="study" class="on">ทบทวน <span id="dueBadge"></span></button>
+    <button data-tab="add">สร้างการ์ด</button>
+    <button data-tab="stats">สถิติ</button>
+  </nav>
+</header>
+<main>
+  <section id="study">
+    <div id="studyEmpty" hidden>
+      <p class="big">วันนี้ไม่มีการ์ดที่ต้องทบทวน</p>
+      <p>เพิ่มการ์ดใหม่ หรือกลับมาใหม่เมื่อถึงกำหนดทบทวน</p>
+    </div>
+    <div id="studyBox" hidden>
+      <p class="muted" id="progress"></p>
+      <div class="card" id="card" tabindex="0" role="button" aria-label="พลิกการ์ด">
+        <div class="side" id="side">คำถาม</div>
+        <div class="text" id="cardText"></div>
+      </div>
+      <button class="primary" id="flip">แสดงคำตอบ</button>
+      <div class="rate" id="rate" hidden>
+        <button data-q="1" class="r1">ลืม<small id="i1"></small></button>
+        <button data-q="3" class="r3">ยาก<small id="i3"></small></button>
+        <button data-q="4" class="r4">จำได้<small id="i4"></small></button>
+        <button data-q="5" class="r5">ง่าย<small id="i5"></small></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="add" hidden>
+    <h2>ให้ AI ช่วยสร้างการ์ดจากโน้ต</h2>
+    <textarea id="notes" rows="7" placeholder="วางโน้ตหรือเนื้อหาที่เรียนมาที่นี่ เช่น&#10;Photosynthesis คือกระบวนการที่พืชเปลี่ยนแสงเป็นพลังงานเคมี"></textarea>
+    <div class="row">
+      <label>จำนวนการ์ด <input type="number" id="count" value="8" min="1" max="20"></label>
+      <button class="primary" id="gen">สร้างการ์ดจากโน้ต</button>
+    </div>
+    <p class="muted" id="genMsg"></p>
+
+    <h2>เพิ่มการ์ดเอง</h2>
+    <input id="q" placeholder="คำถาม">
+    <input id="a" placeholder="คำตอบ">
+    <button id="addBtn">บันทึกการ์ด</button>
+
+    <h2>คลังการ์ด <span class="muted" id="total"></span></h2>
+    <ul id="list"></ul>
+    <div class="row">
+      <button id="exp">ส่งออก JSON</button>
+      <label class="btn">นำเข้า JSON <input type="file" id="imp" accept=".json" hidden></label>
+    </div>
+  </section>
+
+  <section id="stats" hidden>
+    <div class="nums">
+      <div><b id="sTotal">0</b>การ์ดทั้งหมด</div>
+      <div><b id="sDue">0</b>ถึงกำหนดวันนี้</div>
+      <div><b id="sMaster">0</b>จำได้แม่น (ทบทวนห่าง 21 วัน+)</div>
+      <div><b id="sStreak">0</b>วันที่ทบทวนติดต่อกัน</div>
+    </div>
+    <h2>การ์ดที่จะถึงกำหนดใน 7 วันข้างหน้า</h2>
+    <div class="bars" id="bars"></div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

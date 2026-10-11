@@ -1,0 +1,42 @@
+:root{--ink:#1d2a4a;--paper:#f3f6fb;--rule:#b9c6e0;--hi:#ffe14d;--ok:#1f8a5b;--bad:#c8403a;--mu:#5d6b8a;--card:#fffef7}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 "IBM Plex Sans Thai",system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;max-width:760px;margin:0 auto;padding:16px}
+h1{margin:0;font-size:1.3rem;background:linear-gradient(transparent 60%,var(--hi) 60%);padding:0 4px}
+h2{font-size:1.05rem;margin:28px 0 8px}
+nav{display:flex;gap:4px}
+nav button{background:none;border:0;border-bottom:3px solid transparent;border-radius:0;color:var(--mu);padding:6px 10px}
+nav button.on{color:var(--ink);border-color:var(--ink);font-weight:600}
+#dueBadge{background:var(--ink);color:#fff;border-radius:99px;padding:0 7px;font-size:.78rem}
+#dueBadge:empty{display:none}
+main{max-width:760px;margin:0 auto;padding:0 16px 48px}
+button,.btn{font:inherit;cursor:pointer;border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:6px;padding:8px 14px;display:inline-block}
+button:focus-visible,.card:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+.primary{background:var(--ink);color:#fff}
+input,textarea{width:100%;font:inherit;color:var(--ink);background:#fff;border:1.5px solid var(--rule);border-radius:6px;padding:8px 10px;margin:0 0 8px}
+input[type=number]{width:80px;margin:0 0 0 6px}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:8px 0}
+.muted{color:var(--mu);font-size:.9rem}
+.big{font-size:1.2rem;font-weight:600}
+.card{min-height:260px;margin:12px 0;padding:20px 24px;background:var(--card);border:1.5px solid var(--ink);border-radius:4px;box-shadow:6px 6px 0 var(--rule);cursor:pointer;
+ background-image:linear-gradient(transparent 39px,var(--rule) 40px);background-size:100% 40px;display:flex;flex-direction:column}
+.side{font-size:.85rem;color:var(--mu);margin-bottom:4px}
+.text{font:700 1.4rem/40px "Mali","IBM Plex Sans Thai",sans-serif;margin:auto 0;white-space:pre-wrap}
+.card.ans .text{color:var(--ok)}
+.rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.rate button{display:flex;flex-direction:column;align-items:center;padding:10px 4px;font-weight:600}
+.rate small{font-weight:400;color:var(--mu);font-size:.75rem}
+.r1{border-color:var(--bad);color:var(--bad)}.r3{border-color:#b7791f;color:#b7791f}.r4,.r5{border-color:var(--ok);color:var(--ok)}
+ul{list-style:none;padding:0;margin:0}
+li{display:flex;gap:10px;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:1px solid var(--rule)}
+li div{flex:1;min-width:0}li small{color:var(--mu);display:block}
+li button{border-color:var(--bad);color:var(--bad);padding:2px 10px}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.nums div{border-left:4px solid var(--hi);padding:2px 10px;color:var(--mu);font-size:.9rem}
+.nums b{display:block;font-size:2rem;color:var(--ink);line-height:1.2}
+.bars{display:flex;align-items:flex-end;gap:8px;height:150px;border-bottom:1.5px solid var(--ink)}
+.bars div{flex:1;background:var(--ink);min-height:2px;position:relative;border-radius:3px 3px 0 0}
+.bars span{position:absolute;top:-22px;width:100%;text-align:center;font-size:.8rem}
+.bars em{position:absolute;bottom:-24px;width:100%;text-align:center;font-size:.75rem;font-style:normal;color:var(--mu)}
+.bars{margin-bottom:34px}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:active{transform:translate(2px,2px)}}
