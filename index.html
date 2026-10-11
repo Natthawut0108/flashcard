@@ -43,6 +43,10 @@
     <h2>ให้ AI ช่วยสร้างการ์ดจากโน้ต</h2>
     <textarea id="notes" rows="7" placeholder="วางโน้ตหรือเนื้อหาที่เรียนมาที่นี่ เช่น&#10;Photosynthesis คือกระบวนการที่พืชเปลี่ยนแสงเป็นพลังงานเคมี"></textarea>
     <div class="row">
+      <label class="btn">แนบไฟล์ (.txt .md .pdf .docx) <input type="file" id="file" accept=".txt,.md,.csv,.pdf,.docx" hidden></label>
+      <span class="muted" id="fileName"></span>
+    </div>
+    <div class="row">
       <label>จำนวนการ์ด <input type="number" id="count" value="8" min="1" max="20"></label>
       <button class="primary" id="gen">สร้างการ์ดจากโน้ต</button>
     </div>

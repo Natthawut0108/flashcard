@@ -93,6 +93,40 @@ $("#gen").onclick = async () => {
   addCards(made); $("#genMsg").textContent = `เพิ่ม ${made.length} การ์ดแล้ว (สร้างโดย${by})`;
 };
 
+/* ---------- แนบไฟล์ (txt / md / csv / pdf / docx) ---------- */
+const loadScript = src => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+async function readFile(f) {
+  const ext = f.name.split(".").pop().toLowerCase();
+  if (["txt", "md", "csv"].includes(ext)) return f.text();
+  if (ext === "pdf") {
+    if (!window.pdfjsLib) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js");
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    const pdf = await pdfjsLib.getDocument({ data: await f.arrayBuffer() }).promise;
+    let t = "";
+    for (let i = 1; i <= pdf.numPages && t.length < 20000; i++) {
+      const p = await (await pdf.getPage(i)).getTextContent();
+      t += p.items.map(x => x.str).join(" ") + "\n";
+    }
+    return t;
+  }
+  if (ext === "docx") {
+    if (!window.mammoth) await loadScript("https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js");
+    return (await mammoth.extractRawText({ arrayBuffer: await f.arrayBuffer() })).value;
+  }
+  throw new Error("ชนิดไฟล์ไม่รองรับ");
+}
+$("#file").onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  $("#fileName").textContent = "กำลังอ่านไฟล์...";
+  try {
+    const t = (await readFile(f)).trim();
+    if (!t) throw new Error("ไม่พบข้อความในไฟล์ (ถ้าเป็น PDF สแกน ต้องใช้ไฟล์ที่เลือกข้อความได้)");
+    $("#notes").value = t.slice(0, 20000);
+    $("#fileName").textContent = `อ่านไฟล์ ${f.name} แล้ว (${Math.min(t.length, 20000)} ตัวอักษร) AI ใช้ได้ประมาณ 8,000 ตัวอักษรแรก`;
+  } catch (err) { $("#fileName").textContent = "อ่านไฟล์ไม่ได้: " + err.message; }
+  e.target.value = "";
+};
+
 function renderList() {
   $("#total").textContent = `(${cards.length} ใบ)`;
   $("#list").innerHTML = cards.length ? cards.map(c => `<li><div><b>${esc(c.q)}</b><small>${esc(c.a)}</small></div><button data-id="${c.id}" aria-label="ลบการ์ด">ลบ</button></li>`).join("") : '<li class="muted">ยังไม่มีการ์ด วางโน้ตด้านบนเพื่อสร้างการ์ดชุดแรก</li>';
